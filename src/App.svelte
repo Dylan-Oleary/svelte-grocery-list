@@ -12,6 +12,7 @@
 
     body {
         font-family: "Quicksand", sans-serif;
+        background-color: #121212;
     }
 
     h1 {
