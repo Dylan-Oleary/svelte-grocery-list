@@ -3,6 +3,17 @@
     @tailwind components;
     @tailwind utilities;
 
+    html,
+    body {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    body {
+        font-family: "Quicksand", sans-serif;
+    }
+
     h1 {
         font-weight: 600;
     }
