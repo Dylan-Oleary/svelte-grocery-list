@@ -1,35 +1,38 @@
 <script>
     export let onSubmit;
 
-    import { slide } from 'svelte/transition';
-
     let descriptionInput = "";
 
-    const handleChange = e => {
-        const { target: { value } } = e;
+    const handleChange = (e) => {
+        const {
+            target: { value }
+        } = e;
 
         descriptionInput = value;
     };
 
     const handleSubmit = () => {
-        if(descriptionInput.trim().length > 0){
+        if (descriptionInput.trim().length > 0) {
             onSubmit(descriptionInput);
             descriptionInput = "";
         }
     };
 </script>
 
-<form
-    on:submit|preventDefault|stopPropagation={handleSubmit}
-    class="px-4 w-full"
-    transition:slide
+<div
+    class="flex flex-grow border-solid border-2 border-gray-400 border-l-0 border-r-0 border-b-0 bg-purple-400"
 >
-    <input
-        class="border-solid border-b-2 border-violet w-full"
-        type="text"
-        name="description"
-        value={descriptionInput}
-        on:change={handleChange}
-        placeholder="Add new item"
-    />
-</form>
+    <form
+        on:submit|preventDefault|stopPropagation="{handleSubmit}"
+        class="flex flex-grow w-full p-4 pr-8 ml-8 bg-white"
+    >
+        <input
+            class="w-full bg-transparent outline-none"
+            type="text"
+            name="description"
+            value="{descriptionInput}"
+            on:change="{handleChange}"
+            placeholder="What do you need?"
+        />
+    </form>
+</div>

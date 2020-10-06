@@ -5,9 +5,9 @@
     export let toggleStatus;
     export let removeItem;
 
-    import { slide } from 'svelte/transition';
-    import Complete from "svelte-material-icons/CheckboxBlankOutline.svelte";
-    import Incomplete from "svelte-material-icons/CheckboxOutline.svelte";
+    import { slide } from "svelte/transition";
+    import Incomplete from "svelte-material-icons/CheckboxBlankOutline.svelte";
+    import Complete from "svelte-material-icons/CheckboxOutline.svelte";
     import Trash from "svelte-material-icons/DeleteVariant.svelte";
 
     const capitalizeFirstLetter = (name) => {
@@ -19,21 +19,29 @@
 </script>
 
 <div
-    class="flex border-solid border-2 border-gray-400 border-l-0 border-r-0 border-b-0 bg-gray-400"
-    on:click={() => toggleStatus(id)}
+    class="flex border-solid border-2 border-gray-400 border-l-0 border-r-0 border-b-0 bg-purple-400"
+    on:dblclick="{() => toggleStatus(id)}"
     transition:slide|local
 >
-    <div class="flex flex-grow justify-between ml-8 bg-white p-4">
+    <div class="flex flex-grow justify-between ml-8 bg-white p-4 pr-8">
         <div class="flex items-center">
-            {#if completed}
-                <Incomplete size="1.5em" />
-            {:else}
-                <Complete size="1.5em" />
-            {/if}
-            <h3 class={`text-2xl ml-2 ${completed ? "line-through text-gray-600" : ""}`}>{capitalizeFirstLetter(name)}</h3>
+            <button type="button" on:click="{() => toggleStatus(id)}" class="focus:outline-none">
+                {#if completed}
+                    <Complete size="1.5em" color="#718096" />
+                {:else}
+                    <Incomplete size="1.5em" color="#718096" />
+                {/if}
+            </button>
+            <h3 class="{`text-lg ml-2 ${completed ? 'line-through text-gray-600' : ''}`}">
+                {capitalizeFirstLetter(name)}
+            </h3>
         </div>
-        <button type="button" on:click|stopPropagation={() => removeItem(id)}>
-            <Trash size="1.5em"/>
+        <button
+            type="button"
+            on:click|stopPropagation="{() => removeItem(id)}"
+            class="focus:outline-none"
+        >
+            <Trash size="1.5em" color="#121212" />
         </button>
     </div>
 </div>

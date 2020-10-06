@@ -1,3 +1,13 @@
+<style global>
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    h1 {
+        font-weight: 600;
+    }
+</style>
+
 <script>
     import List from "./List.svelte";
 
@@ -12,21 +22,24 @@
     ];
 </script>
 
-<main class="h-screen w-full">
-    <div class="max-w-screen-md mx-auto px-4 py-2">
-        <div class="border-solid border-gray-200 border-2 rounded-sm shadow-sm">
+<main class="flex-grow w-full flex items-center p-4">
+    <div class="max-w-screen-md mx-auto min-w-sm w-full">
+        <div class="flex">
+            <h1
+                class="text-5xl mb-6 opacity-high text-white border-solid border-4 border-l-0 border-r-0 border-t-0 border-purple-400"
+            >
+                Oh My Groceries!
+            </h1>
+        </div>
+        <div
+            class="border-solid border-gray-200 border-2 rounded-lg shadow-dark bg-gray-900 border-purple-700"
+        >
             {#each lists as list, index (list.id)}
                 <List
-                    title={list.title}
-                    className={`border-solid border-4 border-violet border-l-0 border-r-0 border-b-0 ${index === 0 ? "border-t-0" : ""}`}
+                    title="{list.title}"
+                    className="{`border-solid border-4 border-gray-700 border-l-0 border-r-0 border-b-0 ${index === 0 ? 'border-t-0' : ''}`}"
                 />
             {/each}
         </div>
     </div>
 </main>
-
-<style global>
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-</style>

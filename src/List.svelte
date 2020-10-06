@@ -1,10 +1,32 @@
+<style>
+    progress {
+        border-radius: 7px;
+        height: 8px;
+    }
+    progress::-webkit-progress-bar {
+        background-color: #a0aec0;
+        border-radius: 7px;
+    }
+    progress::-webkit-progress-value {
+        background-color: #6b46c1;
+        border-radius: 7px;
+    }
+    progress::-webkit-progress-value::after {
+        content: ":)";
+        color: white;
+    }
+    .title {
+        font-weight: 600;
+    }
+</style>
+
 <script>
     export let title;
     export let className;
 
-    import { tweened } from 'svelte/motion';
-    import { cubicOut } from 'svelte/easing';
-    import { slide } from 'svelte/transition';
+    import { tweened } from "svelte/motion";
+    import { cubicOut } from "svelte/easing";
+    import { slide } from "svelte/transition";
     import ChevronDown from "svelte-material-icons/ChevronDownBoxOutline.svelte";
     import ChevronUp from "svelte-material-icons/ChevronUpBoxOutline.svelte";
     import Form from "./Form.svelte";
@@ -12,9 +34,7 @@
 
     let showList = false;
     let itemIndex = 0;
-    let items = [
-        { id: itemIndex, name: "gravy", completed: false }
-    ];
+    let items = [];
     let itemsCompleted = 0;
     const progress = tweened(0, {
         duration: 400,
@@ -27,49 +47,62 @@
     };
 
     const removeItem = (id) => {
-        items = items.filter(item => item.id !== id);
+        items = items.filter((item) => item.id !== id);
+        itemsCompleted = items.filter((item) => item.completed).length;
+        setProgress();
     };
 
     const toggleStatus = (id) => {
-        items = items.map(item => {
-            if(item.id === id) {
+        items = items.map((item) => {
+            if (item.id === id) {
                 return {
                     ...item,
                     completed: !item.completed
-                }
+                };
             }
 
             return item;
         });
-        itemsCompleted = items.filter(item => item.completed).length;
-        progress.set(itemsCompleted / items.length);
+        itemsCompleted = items.filter((item) => item.completed).length;
+        setProgress();
     };
 
     const toggleList = () => {
         showList = !showList;
-    }
+    };
+
+    const setProgress = () => {
+        if (items.length === 0) {
+            progress.set(0);
+        } else {
+            progress.set(itemsCompleted / items.length);
+        }
+    };
 </script>
 
-<div class={className}>
-    <div class="flex items-center justify-between p-4">
-        <div class="flex flex-grow items-center">
-            <h2 class="text-4xl">{title}</h2>
+<div class="{className}">
+    <div
+        class="flex items-center justify-between px-8 pt-4 pb-2 text-white"
+        on:dblclick="{toggleList}"
+    >
+        <div class="flex items-center">
+            <h2 class="text-2xl opacity-high title">{title}</h2>
             <span class="ml-2 text-gray-600">({itemsCompleted} / {items.length})</span>
-            <progress class="flex-grow" value={$progress}></progress>
         </div>
-        <button type="button" on:click={toggleList}>
+        <button type="button" on:click="{toggleList}" class="focus:outline-none">
             {#if showList}
-                <ChevronUp size="1.25em" />
+                <ChevronUp size="1.5em" color="#b794f4" />
             {:else}
-                <ChevronDown size="1.25em" />
+                <ChevronDown size="1.5em" color="#b794f4" />
             {/if}
         </button>
     </div>
+    <progress class="px-8 mb-2 w-full progress-bar" value="{$progress}"></progress>
     {#if showList}
-    <Form onSubmit={addItem} />
-    <div class="mt-2" transition:slide>
-        {#each items as item (item.id)}
-                <Item { ...item } toggleStatus={toggleStatus} removeItem={removeItem} />
+        <div class="mt-2" transition:slide>
+            <Form onSubmit="{addItem}" />
+            {#each items as item (item.id)}
+                <Item {...item} toggleStatus="{toggleStatus}" removeItem="{removeItem}" />
             {/each}
         </div>
     {/if}
