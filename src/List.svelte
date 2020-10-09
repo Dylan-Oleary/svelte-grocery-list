@@ -24,6 +24,7 @@
     export let title;
     export let className;
 
+    import { onMount } from "svelte";
     import { tweened } from "svelte/motion";
     import { cubicOut } from "svelte/easing";
     import { slide } from "svelte/transition";
@@ -36,6 +37,7 @@
     let itemIndex = 0;
     let items = [];
     let itemsCompleted = 0;
+
     const progress = tweened(0, {
         duration: 400,
         easing: cubicOut
@@ -47,12 +49,16 @@
         items = [...items, { id: itemIndex, name: itemName, completed: false }];
         itemsCompleted = items.filter((item) => item.completed).length;
         setProgress();
+
+        if (window.localStorage) updateLocalStorage(items);
     };
 
     const removeItem = (id) => {
         items = items.filter((item) => item.id !== id);
         itemsCompleted = items.filter((item) => item.completed).length;
         setProgress();
+
+        if (window.localStorage) updateLocalStorage(items);
     };
 
     const toggleStatus = (id) => {
@@ -68,6 +74,8 @@
         });
         itemsCompleted = items.filter((item) => item.completed).length;
         setProgress();
+
+        if (window.localStorage) updateLocalStorage(items);
     };
 
     const toggleList = () => {
@@ -81,6 +89,30 @@
             progress.set(itemsCompleted / items.length);
         }
     };
+
+    const updateLocalStorage = (items) => {
+        window.localStorage.setItem(title, JSON.stringify(items));
+    };
+
+    onMount(() => {
+        if (window.localStorage) {
+            items = JSON.parse(localStorage.getItem(title)) || [];
+            itemsCompleted = items.filter((item) => item.completed).length;
+
+            // Update New Index on browser refresh to prevent duplicate indices
+            if (items.length > 0) {
+                let newIndex = items[0].id;
+
+                items.forEach((item) => {
+                    if (parseInt(item.id) > newIndex) newIndex = item.id + 1;
+                });
+
+                itemIndex = newIndex;
+            }
+
+            setProgress();
+        }
+    });
 </script>
 
 <div class="{className}">
