@@ -3,7 +3,10 @@ module.exports = {
         removeDeprecatedGapUtilities: true,
         purgeLayersByDefault: true
     },
-    purge: [],
+    purge: {
+        content: ["./src/*.svelte"],
+        layers: ["utilities"]
+    },
     theme: {
         extend: {
             boxShadow: {

@@ -43,7 +43,10 @@
 
     const addItem = (itemName) => {
         itemIndex++;
+
         items = [...items, { id: itemIndex, name: itemName, completed: false }];
+        itemsCompleted = items.filter((item) => item.completed).length;
+        setProgress();
     };
 
     const removeItem = (id) => {

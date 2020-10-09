@@ -36,15 +36,15 @@
 
 <main class="flex-grow w-full flex items-center p-4">
     <div class="max-w-screen-md mx-auto min-w-sm w-full">
-        <div class="flex">
+        <div class="flex justify-center">
             <h1
-                class="text-5xl mb-6 opacity-high text-white border-solid border-4 border-l-0 border-r-0 border-t-0 border-purple-400"
+                class="text-4xl text-center mb-6 opacity-high text-white border-solid border-4 border-l-0 border-r-0 border-t-0 border-purple-400"
             >
                 Oh My Groceries!
             </h1>
         </div>
         <div
-            class="border-solid border-gray-200 border-2 rounded-lg shadow-dark bg-gray-900 border-purple-700"
+            class="border-solid border-gray-200 border-2 rounded-lg shadow-dark bg-gray-900 border-purple-400"
         >
             {#each lists as list, index (list.id)}
                 <List
