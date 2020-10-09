@@ -146,7 +146,7 @@
             <h2 class="text-2xl opacity-high title">{title}</h2>
             <span class="ml-2 text-gray-600">({itemsCompleted} / {items.length})</span>
         </div>
-        <button type="button" on:click="{toggleList}" class="focus:outline-none">
+        <button type="button" on:click|stopPropagation="{toggleList}" class="focus:outline-none">
             {#if showList}
                 <ChevronUp size="1.5em" color="#b794f4" />
             {:else}
