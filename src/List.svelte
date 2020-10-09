@@ -46,7 +46,7 @@
     const addItem = (itemName) => {
         itemIndex++;
 
-        items = [...items, { id: itemIndex, name: itemName, completed: false }];
+        items = sortItems([...items, { id: itemIndex, name: itemName, completed: false }]);
         itemsCompleted = items.filter((item) => item.completed).length;
         setProgress();
 
@@ -54,24 +54,40 @@
     };
 
     const removeItem = (id) => {
-        items = items.filter((item) => item.id !== id);
+        items = sortItems(items.filter((item) => item.id !== id));
         itemsCompleted = items.filter((item) => item.completed).length;
         setProgress();
 
         if (window.localStorage) updateLocalStorage(items);
     };
 
-    const toggleStatus = (id) => {
-        items = items.map((item) => {
-            if (item.id === id) {
-                return {
-                    ...item,
-                    completed: !item.completed
-                };
-            }
+    const sortItems = (itemArray) => {
+        if (itemArray && itemArray.length > 0) {
+            itemArray.sort((a) => {
+                if (a.completed) return 1;
 
-            return item;
-        });
+                return -1;
+            });
+
+            return itemArray;
+        } else {
+            return [];
+        }
+    };
+
+    const toggleStatus = (id) => {
+        items = sortItems(
+            items.map((item) => {
+                if (item.id === id) {
+                    return {
+                        ...item,
+                        completed: !item.completed
+                    };
+                }
+
+                return item;
+            })
+        );
         itemsCompleted = items.filter((item) => item.completed).length;
         setProgress();
 
@@ -96,7 +112,9 @@
 
     onMount(() => {
         if (window.localStorage) {
-            items = JSON.parse(localStorage.getItem(title)) || [];
+            items = JSON.parse(localStorage.getItem(title))
+                ? sortItems(JSON.parse(localStorage.getItem(title)))
+                : [];
             itemsCompleted = items.filter((item) => item.completed).length;
 
             // Update New Index on browser refresh to prevent duplicate indices
