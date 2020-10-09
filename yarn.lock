@@ -79,6 +79,11 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
+"@sveltejs/gestures@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@sveltejs/gestures/-/gestures-0.0.1.tgz#530dd3a21b9e3a7c08b7a9e81c0282aa4680844e"
+  integrity sha512-D+zbBBPYbtqqk1obVMfzOcS8I63FPlVcpt++VQL4KjK3ZACXsSWKcmsjkGf6G+EWJPbT8Qm2Cgk2Lkvs52vnFA==
+
 "@types/estree@*":
   version "0.0.45"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.45.tgz#e9387572998e5ecdac221950dab3e8c3b16af884"

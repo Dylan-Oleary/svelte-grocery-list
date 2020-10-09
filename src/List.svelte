@@ -24,6 +24,7 @@
     export let title;
     export let className;
 
+    import { tap } from "@sveltejs/gestures";
     import { onMount } from "svelte";
     import { tweened } from "svelte/motion";
     import { cubicOut } from "svelte/easing";
@@ -131,12 +132,15 @@
             setProgress();
         }
     });
+
+    const handleTap = () => {};
 </script>
 
 <div class="{className}">
     <div
         class="flex items-center justify-between px-8 pt-4 pb-2 text-white"
-        on:dblclick="{toggleList}"
+        use:tap
+        on:tap="{toggleList}"
     >
         <div class="flex items-center">
             <h2 class="text-2xl opacity-high title">{title}</h2>

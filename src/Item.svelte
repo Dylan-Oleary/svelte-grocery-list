@@ -5,6 +5,7 @@
     export let toggleStatus;
     export let removeItem;
 
+    import { tap } from "@sveltejs/gestures";
     import { slide } from "svelte/transition";
     import Incomplete from "svelte-material-icons/CheckboxBlankOutline.svelte";
     import Complete from "svelte-material-icons/CheckboxOutline.svelte";
@@ -20,7 +21,8 @@
 
 <div
     class="flex border-solid border-2 border-gray-400 border-l-0 border-r-0 border-b-0 bg-purple-400"
-    on:dblclick="{() => toggleStatus(id)}"
+    use:tap
+    on:tap="{() => toggleStatus(id)}"
     transition:slide|local
 >
     <div class="flex flex-grow justify-between ml-8 bg-white p-4 pr-8">
