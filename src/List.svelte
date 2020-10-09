@@ -132,13 +132,11 @@
             setProgress();
         }
     });
-
-    const handleTap = () => {};
 </script>
 
 <div class="{className}">
     <div
-        class="flex items-center justify-between px-8 pt-4 pb-2 text-white"
+        class="flex items-center justify-between px-8 pt-4 pb-2 text-white cursor-pointer"
         use:tap
         on:tap="{toggleList}"
     >
@@ -146,13 +144,11 @@
             <h2 class="text-2xl opacity-high title">{title}</h2>
             <span class="ml-2 text-gray-600">({itemsCompleted} / {items.length})</span>
         </div>
-        <button type="button" on:click|stopPropagation="{toggleList}" class="focus:outline-none">
-            {#if showList}
-                <ChevronUp size="1.5em" color="#b794f4" />
-            {:else}
-                <ChevronDown size="1.5em" color="#b794f4" />
-            {/if}
-        </button>
+        {#if showList}
+            <ChevronUp size="1.5em" color="#b794f4" />
+        {:else}
+            <ChevronDown size="1.5em" color="#b794f4" />
+        {/if}
     </div>
     <progress class="px-8 mb-2 w-full progress-bar" value="{$progress}"></progress>
     {#if showList}
